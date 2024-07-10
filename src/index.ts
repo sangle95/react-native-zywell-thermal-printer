@@ -1,18 +1,18 @@
-import { NativeModules, Platform } from 'react-native';
+import { NativeModules, Platform } from "react-native";
 
 const { ZywellThermalPrinter: ZywellPrinter } = NativeModules;
 export const PRINTER_TYPE = {
-  NET: 'IP',
-  BLUETOOTH: 'BLUETOOTH',
+  NET: "IP",
+  BLUETOOTH: "BLUETOOTH",
 };
 
 export const PRINT_MODE = {
-  THERMAL: 'THERMAL',
-  LABEL: 'LABEL'
-}
+  THERMAL: "THERMAL",
+  LABEL: "LABEL",
+};
 
 export function clearBuffer(address: string, type: string) {
-  if (Platform.OS === 'ios') {
+  if (Platform.OS === "ios") {
     if (type === PRINTER_TYPE.NET) {
       ZywellPrinter.clearBufferNet(address);
     }
@@ -21,13 +21,13 @@ export function clearBuffer(address: string, type: string) {
     }
   }
 
-  if (Platform.OS === 'android') {
+  if (Platform.OS === "android") {
     ZywellPrinter.clearBuffer(address);
   }
 }
 
 export function disconnectAddress(address: string, type: string) {
-  if (Platform.OS === 'ios') {
+  if (Platform.OS === "ios") {
     if (type === PRINTER_TYPE.NET) {
       ZywellPrinter.disconnectNet(address);
     }
@@ -36,7 +36,7 @@ export function disconnectAddress(address: string, type: string) {
     }
   }
 
-  if (Platform.OS === 'android') {
+  if (Platform.OS === "android") {
     ZywellPrinter.disconnectPort(address);
   }
 }
@@ -44,10 +44,10 @@ export function disconnectAddress(address: string, type: string) {
 export function printPic(
   address: string,
   imagePath: string,
-  opts: { size: number; width: number, mode: string, is_disconnect: boolean },
+  opts: { size: number; width: number; mode: string; is_disconnect: boolean },
   type: string
 ) {
-  if (type === PRINTER_TYPE.BLUETOOTH && Platform.OS === 'ios') {
+  if (type === PRINTER_TYPE.BLUETOOTH && Platform.OS === "ios") {
     return ZywellPrinter.printPicBLE(address, imagePath, opts);
   }
 
@@ -60,7 +60,7 @@ export function connectBLE(address: string) {
       .then(() => {
         resolve(address);
       })
-      .catch(() => reject('ERROR_CONNECT'));
+      .catch(() => reject("ERROR_CONNECT"));
   });
 }
 
